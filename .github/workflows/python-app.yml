@@ -1,0 +1,242 @@
+import random
+
+animals = [
+    {
+        'name': 'tiger',
+        'size': 'big',
+        'color': 'orange',
+        'hint': 'It has black stripes.',
+    },
+    {
+        'name': 'elephant',
+        'size': 'big',
+        'color': 'gray',
+        'hint': 'It has a long trunk.',
+    },
+    {
+        'name': 'frog',
+        'size': 'small',
+        'color': 'green',
+        'hint': 'It can jump high.',
+    },
+    {
+        'name': 'giraffe',
+        'size': 'big',
+        'color': 'yellow',
+        'hint': 'It has a long neck.',
+    },
+    {
+        'name': 'penguin',
+        'size': 'small',
+        'color': 'black and white',
+        'hint': 'It cannot fly, but swims very well.',
+    },
+    {
+        'name': 'lion',
+        'size': 'big',
+        'color': 'yellow',
+        'hint': 'It is known as the "King of the Jungle."',
+    },
+    {
+        'name': 'snake',
+        'size': 'small',
+        'color': 'various',
+        'hint': 'It slithers on the ground.',
+    },
+    {
+        'name': 'zebra',
+        'size': 'big',
+        'color': 'black and white',
+        'hint': 'It has stripes on its body.',
+    },
+    {
+        'name': 'dolphin',
+        'size': 'big',
+        'color': 'gray',
+        'hint': 'It is a marine mammal.',
+    },
+    {
+        'name': 'panda',
+        'size': 'big',
+        'color': 'black and white',
+        'hint': 'It eats bamboo.',
+    },
+    {
+        'name': 'kangaroo',
+        'size': 'big',
+        'color': 'various',
+        'hint': 'It carries its young in a pouch.',
+    },
+    {
+        'name': 'cheetah',
+        'size': 'big',
+        'color': 'yellow with black spots',
+        'hint': 'It is the fastest land animal.',
+    },
+    {
+        'name': 'eagle',
+        'size': 'big',
+        'color': 'various',
+        'hint': 'It is a bird of prey.',
+    },
+    {
+        'name': 'bear',
+        'size': 'big',
+        'color': 'various',
+        'hint': 'It hibernates during winter.',
+    },
+    {
+        'name': 'dolphin',
+        'size': 'big',
+        'color': 'gray',
+        'hint': 'It is a marine mammal.',
+    },
+    {
+        'name': 'penguin',
+        'size': 'small',
+        'color': 'black and white',
+        'hint': 'It cannot fly, but swims very well.',
+    },
+    {
+        'name': 'squirrel',
+        'size': 'small',
+        'color': 'various',
+        'hint': 'It likes to collect nuts.',
+    },
+    {
+        'name': 'koala',
+        'size': 'small',
+        'color': 'gray',
+        'hint': 'It is native to Australia.',
+    },
+    {
+        'name': 'crocodile',
+        'size': 'big',
+        'color': 'green',
+        'hint': 'It is a reptile with sharp teeth.',
+    },
+    {
+        'name': 'polar bear',
+        'size': 'big',
+        'color': 'white',
+        'hint': 'It is native to the Arctic region.',
+    },
+    {
+        'name': 'leopard',
+        'size': 'big',
+        'color': 'yellow with black spots',
+        'hint': 'It is a member of the big cat family.',
+    },
+    {
+        'name': 'camel',
+        'size': 'big',
+        'color': 'various',
+        'hint': 'It has a hump on its back.',
+    },
+    {
+        'name': 'raccoon',
+        'size': 'small',
+        'color': 'gray',
+        'hint': 'It has black markings on its face.',
+    },
+    {
+        'name': 'peacock',
+        'size': 'big',
+        'color': 'various',
+        'hint': 'It is known for its colorful feathers.',
+    },
+]
+
+hints = [
+    "It is an excellent climber.",
+    "It is known for its strong bite force.",
+    "It is a master of camouflage.",
+    "It can change its skin color.",
+]
+
+animal = random.choice(animals)
+
+print("Guess the animal! It is a", animal['size'], "animal.")
+print("Or you can ask a question about the animal.")
+print("You can also guess the animal's color or name.")
+guess = input()
+
+is_question = guess.endswith('?')
+
+is_color_guess = False
+is_name_guess = False
+
+if len(guess.split()) == 2:
+    action, color_or_name = guess.split()
+    if action.lower() == 'the':
+        if color_or_name.lower() == animal['color']:
+            is_color_guess = True
+        elif color_or_name.lower() == animal['name']:
+            is_name_guess = True
+
+if is_question:
+    question = guess[:-1].lower().strip()
+    if question == 'is the animal big or small':
+        if animal['size'] == 'big':
+            print("The animal is big.")
+        else:
+            print("The animal is small.")
+    elif question == 'does the animal live in the water':
+        if 'water' in animal['hint']:
+            print("Yes, the animal lives in the water.")
+        else:
+            print("No, the animal does not live in the water.")
+    elif question == 'is the animal a carnivore':
+        if 'carnivore' in animal['hint']:
+            print("Yes, the animal is a carnivore.")
+        else:
+            print("No, the animal is not a carnivore.")
+    # Add more questions here
+
+if not is_question or not is_color_guess or not is_name_guess:
+    attempts = 1
+    hints_given = 0
+
+    while guess.lower() != animal['name'] and attempts < 5:
+        print("Wrong guess!")
+        attempts += 1
+
+        if attempts == 2 and hints_given < 1:
+            print("Here's a hint: The animal's color is", animal['color'] + ".")
+            hints_given += 1
+
+        if attempts == 3 and hints_given< 2:
+            print("Here's another hint: " + animal['hint'])
+            hints_given += 1
+
+        if attempts == 5 and hints_given < 3:
+            print("Here's yet another hint: " + random.choice(hints))
+            hints_given += 1
+
+        guess = input()
+
+        if guess.lower().endswith('?'):
+            question = guess[:-1].lower().strip()
+            # handle the question and provide an answer
+            if question == 'is the animal big or small':
+                if animal['size'] == 'big':
+                    print("The animal is big.")
+                else:
+                    print("The animal is small.")
+            elif question == 'does the animal live in the water':
+                if 'water' in animal['hint']:
+                    print("Yes, the animal lives in the water.")
+                else:
+                    print("No, the animal does not live in the water.")
+            elif question == 'is the animal a carnivore':
+                if 'carnivore' in animal['hint']:
+                    print("Yes, the animal is a carnivore.")
+                else:
+                    print("No, the animal is not a carnivore.")
+            # Add more questions here
+
+    if guess.lower() == animal['name']:
+        print("Congratulations! You guessed the animal '{}' correctly in {} attempts.".format(animal['name'], attempts))
+    else:
+        print("Sorry, you did not guess the animal correctly.")
+        print("The correct answer was '{}'.".format(animal['name']))
